@@ -3,186 +3,372 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>桃園親子一日遊 v6</title>
+
+<title>桃園親子一日遊 v7</title>
+
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
 .section{display:none}
 .section.active{display:block}
-.navbtn{padding:8px 14px; border-radius:8px; background:#f1f5f9; cursor:pointer;}
-.card{background:white; padding:12px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); margin-bottom:10px;}
-.timeline{border-left:4px solid #3b82f6; padding-left:12px; margin-bottom:16px;}
-iframe{width:100%; height:250px; border:0; border-radius:8px;}
+.navbtn{padding:8px 12px;background:#e5e7eb;border-radius:6px}
+.card{background:white;padding:12px;border-radius:8px;margin-bottom:10px}
+.timeline{border-left:4px solid #3b82f6;padding-left:10px;margin-bottom:10px}
+iframe{width:100%;height:240px;border:0;border-radius:8px}
 </style>
+
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-100">
 
 <!-- NAV -->
-<div class="bg-white shadow sticky top-0">
-<div class="max-w-6xl mx-auto flex flex-wrap gap-2 p-4">
+<div class="bg-white shadow p-3 flex gap-2 flex-wrap">
+
 <button class="navbtn" onclick="show('overview')">總覽</button>
 <button class="navbtn" onclick="show('timeline')">行程</button>
+<button class="navbtn" onclick="show('food')">美食</button>
+<button class="navbtn" onclick="show('route')">路線</button>
 <button class="navbtn" onclick="show('map')">地圖</button>
 <button class="navbtn" onclick="show('parking')">停車</button>
-<button class="navbtn" onclick="show('food')">美食</button>
 <button class="navbtn" onclick="show('cost')">費用</button>
-<button class="navbtn" onclick="show('transport')">交通</button>
-</div>
+
 </div>
 
-<div class="max-w-6xl mx-auto p-4">
+<div class="p-4 max-w-5xl mx-auto">
 
 <!-- OVERVIEW -->
+
 <div id="overview" class="section active">
-<h1 class="text-2xl font-bold mb-4">2026/3/15 桃園親子一日遊</h1>
+
+<h1 class="text-2xl font-bold mb-3">
+
+桃園親子一日遊
+
+</h1>
+
 <div class="card">
+
 出發：新莊頭前路<br>
+
 預約：義百代 11:00<br>
-人數：4人
+
+人數：
+
+<input id="people" type="number" value="4" class="border w-16">
+
+<button onclick="updateCost()">更新費用</button>
+
 </div>
+
 </div>
+
 
 <!-- TIMELINE -->
+
 <div id="timeline" class="section">
-<h2 class="text-xl font-bold mb-4">時間軸</h2>
+
+<h2 class="text-xl mb-2">時間軸</h2>
+
 <div id="timelineList"></div>
+
 </div>
 
-<!-- MAP -->
-<div id="map" class="section">
-<div class="card">
-義百代<br>
-<iframe src="https://maps.google.com/maps?q=義百代桃園店&output=embed"></iframe>
-</div>
-<div class="card">
-月眉濕地<br>
-<iframe src="https://maps.google.com/maps?q=月眉濕地&output=embed"></iframe>
-</div>
-<div class="card">
-大溪老街<br>
-<iframe src="https://maps.google.com/maps?q=大溪老街&output=embed"></iframe>
-</div>
-</div>
-
-<!-- PARKING -->
-<div id="parking" class="section">
-<div class="card">
-大溪橋停車場
-<a target="_blank" href="https://maps.google.com/?q=大溪橋停車場" class="text-blue-600">Google Maps</a>
-</div>
-<div class="card">
-月眉停車
-<a target="_blank" href="https://maps.google.com/?q=月眉濕地停車場" class="text-blue-600">Google Maps</a>
-</div>
-</div>
 
 <!-- FOOD -->
-<div id="food" class="section">
-<h2 class="text-xl font-bold mb-4">美食推薦</h2>
 
-<div class="flex gap-2 mb-2">
-<button class="navbtn" onclick="filterFood('all')">全部</button>
-<button class="navbtn" onclick="filterFood('正餐')">正餐</button>
-<button class="navbtn" onclick="filterFood('小吃')">小吃</button>
-<button class="navbtn" onclick="filterFood('甜點')">甜點</button>
-</div>
+<div id="food" class="section">
+
+<h2 class="text-xl mb-2">美食推薦</h2>
 
 <div id="foodList"></div>
+
 </div>
+
+
+<!-- ROUTE -->
+
+<div id="route" class="section">
+
+<h2 class="text-xl mb-2">推薦行動路線</h2>
+
+<div class="card">
+
+新莊 → 義百代 → 月眉濕地 → 大溪橋停車場 →  
+豆干 → 香腸 → 豆花 → 飲料 → 回停車場 → 回家
+
+</div>
+
+</div>
+
+
+<!-- MAP -->
+
+<div id="map" class="section">
+
+<div class="card">
+
+義百代
+
+<iframe src="https://maps.google.com/maps?q=桃園市桃園區大誠路2號&output=embed"></iframe>
+
+</div>
+
+<div class="card">
+
+月眉濕地
+
+<iframe src="https://maps.google.com/maps?q=月眉濕地&output=embed"></iframe>
+
+</div>
+
+<div class="card">
+
+大溪老街
+
+<iframe src="https://maps.google.com/maps?q=大溪老街&output=embed"></iframe>
+
+</div>
+
+</div>
+
+
+<!-- PARKING -->
+
+<div id="parking" class="section">
+
+<div class="card">
+
+大溪橋停車場
+
+<br>
+
+<a target="_blank"
+href="https://maps.google.com/?q=大溪橋停車場">
+
+Google Map
+
+</a>
+
+</div>
+
+</div>
+
 
 <!-- COST -->
+
 <div id="cost" class="section">
-<h2 class="text-xl font-bold mb-4">費用統計</h2>
-<canvas id="costChart"></canvas>
+
+<h2 class="text-xl">費用統計</h2>
+
+<canvas id="chart"></canvas>
+
 <div id="total" class="card"></div>
-</div>
-
-<!-- TRANSPORT -->
-<div id="transport" class="section">
-<h2 class="text-xl font-bold mb-4">交通統計</h2>
-<canvas id="transportChart"></canvas>
-</div>
 
 </div>
+
+
+</div>
+
 
 <script>
+
 function show(id){
-document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"))
-document.getElementById(id).classList.add("active")
+
+document.querySelectorAll(".section")
+
+.forEach(s=>s.classList.remove("active"))
+
+document.getElementById(id)
+
+.classList.add("active")
+
 }
 
-// Timeline資料
-const trips=[
-{time:"09:50 出發",drive:50,km:35,fuel:120},
-{time:"11:00 義百代",stay:60,food:2000},
-{time:"12:20 月眉",drive:20,km:12,fuel:40},
-{time:"14:00 老街",stay:120,snack:800,parking:50},
-{time:"16:30 回程",drive:50,km:35,fuel:120}
+
+
+const food=[
+
+{
+
+name:"義百代",
+
+addr:"桃園市桃園區大誠路2號",
+
+desc:"午餐套餐",
+
+map:"https://maps.google.com/?q=桃園市桃園區大誠路2號"
+
+},
+
+{
+
+name:"大溪豆干",
+
+addr:"桃園市大溪區中正路37號",
+
+desc:"必吃",
+
+map:"https://maps.google.com/?q=桃園市大溪區中正路37號"
+
+},
+
+{
+
+name:"老街香腸",
+
+addr:"大溪老街",
+
+desc:"小吃",
+
+map:"https://maps.google.com/?q=大溪老街"
+
+},
+
+{
+
+name:"老街豆花",
+
+addr:"大溪老街",
+
+desc:"甜點",
+
+map:"https://maps.google.com/?q=大溪老街豆花"
+
+}
+
 ]
+
+
+
+let html=""
+
+food.forEach(f=>{
+
+html+=`<div class="card">
+
+<b>${f.name}</b><br>
+
+${f.addr}<br>
+
+${f.desc}<br>
+
+<a target="_blank" href="${f.map}">
+
+Google Map
+
+</a>
+
+</div>`
+
+})
+
+document.getElementById("foodList")
+
+.innerHTML=html
+
+
+
+const trips=[
+
+{t:"出發",d:50,f:120},
+
+{t:"午餐",c:2000},
+
+{t:"移動",d:20,f:40},
+
+{t:"老街",c:800,p:50},
+
+{t:"回程",d:50,f:120}
+
+]
+
+
 
 function renderTimeline(){
-let html=""
-trips.forEach(t=>{
-html+=`<div class="timeline"><b>${t.time}</b><br>`
-html+=t.drive?`🚗 ${t.drive}分鐘 / ${t.km}km / $${t.fuel}<br>`:""
-html+=t.food?`🍜 午餐 $${t.food}<br>`:""
-html+=t.snack?`🍡 點心 $${t.snack}<br>`:""
-html+=t.parking?`🅿 停車 $${t.parking}<br>`:""
-html+=t.stay?`停留 ${t.stay} 分鐘<br>`:""
-html+="</div>"
+
+let h=""
+
+trips.forEach(x=>{
+
+h+=`<div class="timeline">${x.t}`
+
+if(x.d)h+=` 🚗${x.d}分 $${x.f}`
+
+if(x.c)h+=` 🍜${x.c}`
+
+if(x.p)h+=` 🅿${x.p}`
+
+h+="</div>"
+
 })
-document.getElementById("timelineList").innerHTML=html
+
+document.getElementById("timelineList")
+
+.innerHTML=h
+
 }
+
 renderTimeline()
 
-// 費用統計
-const fuel=280
-const parking=50
-const meal=2000
-const snack=800
-const total=fuel+parking+meal+snack
-document.getElementById("total").innerHTML="總費用 "+total+" 元"
 
-new Chart(document.getElementById("costChart"),{
+
+function updateCost(){
+
+let p=
+
+parseInt(document.getElementById("people").value)
+
+let meal=p*500
+
+let snack=p*200
+
+let fuel=280
+
+let parking=50
+
+let total=
+
+meal+snack+fuel+parking
+
+
+
+document.getElementById("total")
+
+.innerHTML=
+
+"總費用 "+total
+
+
+
+new Chart(
+
+document.getElementById("chart"),
+
+{
+
 type:"bar",
+
 data:{
-labels:["油錢","停車","午餐","點心"],
-datasets:[{label:"費用",data:[fuel,parking,meal,snack],backgroundColor:["#3b82f6","#f97316","#10b981","#facc15"]}]
-}
-})
 
-new Chart(document.getElementById("transportChart"),{
-type:"bar",
-data:{
-labels:["總車程時間(分鐘)","總距離(km)","油錢(元)"],
-datasets:[{label:"交通統計",data:[120,82,280],backgroundColor:["#3b82f6","#f97316","#10b981"]}]
-}
-})
+labels:["午餐","點心","油","停車"],
 
-// 美食推薦
-const foodList=[
-{name:"義百代餐廳", type:"正餐", map:"https://maps.google.com/?q=義百代桃園店", desc:"午餐套餐 500/人"},
-{name:"大溪老街豆花", type:"甜點", map:"https://maps.google.com/?q=大溪老街豆花", desc:"豆花 50 元"},
-{name:"大溪老街香腸", type:"小吃", map:"https://maps.google.com/?q=大溪老街香腸", desc:"香腸 60 元"},
-{name:"大溪老街魯味", type:"小吃", map:"https://maps.google.com/?q=大溪老街魯味", desc:"小份 50 元"},
-{name:"大溪老街飲料", type:"飲料", map:"https://maps.google.com/?q=大溪老街飲料", desc:"40 元"}
-]
+datasets:[{
 
-function filterFood(type){
-let html=""
-foodList.forEach(f=>{
-if(type==="all" || f.type===type){
-html+=`<div class="card">
-<b>${f.name}</b> (${f.type})<br>
-${f.desc}<br>
-<a href="${f.map}" target="_blank" class="text-blue-600">Google Maps</a>
-</div>`
+data:[meal,snack,fuel,parking]
+
+}]
+
 }
-})
-document.getElementById("foodList").innerHTML=html
+
 }
-filterFood("all") // 預設顯示全部
+
+)
+
+}
+
+updateCost()
 
 </script>
+
 </body>
 </html>
