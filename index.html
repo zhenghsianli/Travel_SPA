@@ -3,57 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>桃園親子一日遊 v5</title>
+<title>桃園親子一日遊 v5 美食更新版</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-
 .section{display:none}
 .section.active{display:block}
-
-.navbtn{
-padding:8px 14px;
-border-radius:8px;
-background:#f1f5f9;
-}
-
-.card{
-background:white;
-padding:12px;
-border-radius:8px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
-margin-bottom:10px;
-}
-
-.timeline{
-border-left:4px solid #3b82f6;
-padding-left:12px;
-margin-bottom:16px;
-}
-
-iframe{
-width:100%;
-height:250px;
-border:0;
-border-radius:8px;
-}
-
+.navbtn{padding:8px 14px; border-radius:8px; background:#f1f5f9; cursor:pointer;}
+.card{background:white; padding:12px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); margin-bottom:10px;}
+.timeline{border-left:4px solid #3b82f6; padding-left:12px; margin-bottom:16px;}
+iframe{width:100%; height:250px; border:0; border-radius:8px;}
 </style>
 
 </head>
-
 <body class="bg-gray-50 text-gray-800">
 
-
 <!-- NAV -->
-
 <div class="bg-white shadow sticky top-0">
-
 <div class="max-w-6xl mx-auto flex flex-wrap gap-2 p-4">
-
 <button class="navbtn" onclick="show('overview')">總覽</button>
 <button class="navbtn" onclick="show('timeline')">行程</button>
 <button class="navbtn" onclick="show('map')">地圖</button>
@@ -61,245 +30,140 @@ border-radius:8px;
 <button class="navbtn" onclick="show('food')">美食</button>
 <button class="navbtn" onclick="show('cost')">費用</button>
 <button class="navbtn" onclick="show('transport')">交通</button>
-
 </div>
-
 </div>
-
-
 
 <div class="max-w-6xl mx-auto p-4">
 
-
 <!-- OVERVIEW -->
-
 <div id="overview" class="section active">
-
-<h1 class="text-2xl font-bold mb-4">
-
-2026/3/15 桃園親子一日遊
-
-</h1>
-
+<h1 class="text-2xl font-bold mb-4">2026/3/15 桃園親子一日遊</h1>
 <div class="card">
-
-出發：新莊頭前路  
-預約：義百代11:00  
-人數：4人  
-
+出發：新莊頭前路<br>
+預約：義百代 11:00<br>
+人數：4人
 </div>
-
 </div>
-
-
 
 <!-- TIMELINE -->
-
 <div id="timeline" class="section">
-
 <h2 class="text-xl font-bold mb-4">時間軸</h2>
-
 <div id="timelineList"></div>
-
 </div>
-
-
 
 <!-- MAP -->
-
 <div id="map" class="section">
-
 <div class="card">
-義百代
+義百代<br>
 <iframe src="https://maps.google.com/maps?q=義百代桃園店&output=embed"></iframe>
 </div>
-
 <div class="card">
-月眉濕地
+月眉濕地<br>
 <iframe src="https://maps.google.com/maps?q=月眉濕地&output=embed"></iframe>
 </div>
-
 <div class="card">
-大溪老街
+大溪老街<br>
 <iframe src="https://maps.google.com/maps?q=大溪老街&output=embed"></iframe>
 </div>
-
 </div>
-
-
 
 <!-- PARKING -->
-
 <div id="parking" class="section">
-
 <div class="card">
 大溪橋停車場
-<a target="_blank"
-href="https://maps.google.com/?q=大溪橋停車場"
-class="text-blue-600">Google Maps</a>
+<a target="_blank" href="https://maps.google.com/?q=大溪橋停車場" class="text-blue-600">Google Maps</a>
 </div>
-
 <div class="card">
 月眉停車
-<a target="_blank"
-href="https://maps.google.com/?q=月眉濕地停車場"
-class="text-blue-600">Google Maps</a>
+<a target="_blank" href="https://maps.google.com/?q=月眉濕地停車場" class="text-blue-600">Google Maps</a>
 </div>
-
 </div>
-
-
 
 <!-- FOOD -->
-
 <div id="food" class="section">
-
-<div class="card">午餐預估 900</div>
-<div class="card">點心預估 800</div>
-
+<h2 class="text-xl font-bold mb-4">美食</h2>
+<div class="card">
+<b>午餐 (義百代)</b><br>
+4人 x 500元 = 2000 元
 </div>
-
-
+<div class="card">
+<b>大溪老街點心</b><br>
+豆花 4 x 50 = 200<br>
+香腸 4 x 60 = 240<br>
+魯味小吃 4 x 50 = 200<br>
+飲料 4 x 40 = 160<br>
+合計：800 元
+</div>
+</div>
 
 <!-- COST -->
-
 <div id="cost" class="section">
-
-<h2 class="text-xl font-bold mb-4">
-
-費用統計
-
-</h2>
-
+<h2 class="text-xl font-bold mb-4">費用統計</h2>
 <canvas id="costChart"></canvas>
-
 <div id="total" class="card"></div>
-
 </div>
-
-
 
 <!-- TRANSPORT -->
-
 <div id="transport" class="section">
-
-<h2 class="text-xl font-bold mb-4">
-
-交通統計
-
-</h2>
-
+<h2 class="text-xl font-bold mb-4">交通統計</h2>
 <canvas id="transportChart"></canvas>
-
 </div>
 
-
 </div>
-
-
 
 <script>
-
-
 function show(id){
-
-document.querySelectorAll(".section")
-.forEach(s=>s.classList.remove("active"))
-
-document.getElementById(id)
-.classList.add("active")
-
+document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"))
+document.getElementById(id).classList.add("active")
 }
 
-
-
+// Timeline資料
 const trips=[
-
 {time:"09:50 出發",drive:50,km:35,fuel:120},
-
-{time:"11:00 義百代",stay:60},
-
+{time:"11:00 義百代",stay:60,food:2000},
 {time:"12:20 月眉",drive:20,km:12,fuel:40},
-
-{time:"14:00 老街",food:900,snack:800,parking:50},
-
+{time:"14:00 老街",stay:120,snack:800,parking:50},
 {time:"16:30 回程",drive:50,km:35,fuel:120}
-
 ]
 
-
-
 function renderTimeline(){
-
 let html=""
-
 trips.forEach(t=>{
-
-html+=`<div class="timeline">
-
-<b>${t.time}</b><br>
-
-${t.drive?`🚗 ${t.drive}分鐘 ${t.km}km $${t.fuel}`:""}
-
-${t.food?`<br>🍜 ${t.food}`:""}
-
-${t.snack?`<br>🍡 ${t.snack}`:""}
-
-${t.parking?`<br>🅿 ${t.parking}`:""}
-
-</div>`
-
+html+=`<div class="timeline"><b>${t.time}</b><br>`
+html+=t.drive?`🚗 ${t.drive}分鐘 / ${t.km}km / $${t.fuel}<br>`:""
+html+=t.food?`🍜 午餐 $${t.food}<br>`:""
+html+=t.snack?`🍡 點心 $${t.snack}<br>`:""
+html+=t.parking?`🅿 停車 $${t.parking}<br>`:""
+html+=t.stay?`停留 ${t.stay} 分鐘<br>`:""
+html+="</div>"
 })
-
 document.getElementById("timelineList").innerHTML=html
-
 }
-
 renderTimeline()
 
-
-
+// 費用統計
 const fuel=280
 const parking=50
-const meal=900
+const meal=2000
 const snack=800
-
 const total=fuel+parking+meal+snack
-
 document.getElementById("total").innerHTML="總費用 "+total+" 元"
 
-
-
-new Chart(
-
-document.getElementById("costChart"),
-
-{
+new Chart(document.getElementById("costChart"),{
 type:"bar",
 data:{
 labels:["油錢","停車","午餐","點心"],
-datasets:[{data:[fuel,parking,meal,snack]}]
+datasets:[{label:"費用",data:[fuel,parking,meal,snack],backgroundColor:["#3b82f6","#f97316","#10b981","#facc15"]}]
 }
-}
+})
 
-)
-
-
-
-new Chart(
-
-document.getElementById("transportChart"),
-
-{
+new Chart(document.getElementById("transportChart"),{
 type:"bar",
 data:{
-labels:["時間","距離","油錢"],
-datasets:[{data:[120,82,280]}]
+labels:["總車程時間(分鐘)","總距離(km)","油錢(元)"],
+datasets:[{label:"交通統計",data:[120,82,280],backgroundColor:["#3b82f6","#f97316","#10b981"]}]
 }
-}
-
-)
-
+})
 </script>
 
 </body>
