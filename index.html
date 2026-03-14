@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>桃園親子一日遊 v5 美食更新版</title>
-
+<title>桃園親子一日遊 v6</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <style>
 .section{display:none}
 .section.active{display:block}
@@ -16,7 +14,6 @@
 .timeline{border-left:4px solid #3b82f6; padding-left:12px; margin-bottom:16px;}
 iframe{width:100%; height:250px; border:0; border-radius:8px;}
 </style>
-
 </head>
 <body class="bg-gray-50 text-gray-800">
 
@@ -81,19 +78,16 @@ iframe{width:100%; height:250px; border:0; border-radius:8px;}
 
 <!-- FOOD -->
 <div id="food" class="section">
-<h2 class="text-xl font-bold mb-4">美食</h2>
-<div class="card">
-<b>午餐 (義百代)</b><br>
-4人 x 500元 = 2000 元
+<h2 class="text-xl font-bold mb-4">美食推薦</h2>
+
+<div class="flex gap-2 mb-2">
+<button class="navbtn" onclick="filterFood('all')">全部</button>
+<button class="navbtn" onclick="filterFood('正餐')">正餐</button>
+<button class="navbtn" onclick="filterFood('小吃')">小吃</button>
+<button class="navbtn" onclick="filterFood('甜點')">甜點</button>
 </div>
-<div class="card">
-<b>大溪老街點心</b><br>
-豆花 4 x 50 = 200<br>
-香腸 4 x 60 = 240<br>
-魯味小吃 4 x 50 = 200<br>
-飲料 4 x 40 = 160<br>
-合計：800 元
-</div>
+
+<div id="foodList"></div>
 </div>
 
 <!-- COST -->
@@ -164,7 +158,31 @@ labels:["總車程時間(分鐘)","總距離(km)","油錢(元)"],
 datasets:[{label:"交通統計",data:[120,82,280],backgroundColor:["#3b82f6","#f97316","#10b981"]}]
 }
 })
-</script>
 
+// 美食推薦
+const foodList=[
+{name:"義百代餐廳", type:"正餐", map:"https://maps.google.com/?q=義百代桃園店", desc:"午餐套餐 500/人"},
+{name:"大溪老街豆花", type:"甜點", map:"https://maps.google.com/?q=大溪老街豆花", desc:"豆花 50 元"},
+{name:"大溪老街香腸", type:"小吃", map:"https://maps.google.com/?q=大溪老街香腸", desc:"香腸 60 元"},
+{name:"大溪老街魯味", type:"小吃", map:"https://maps.google.com/?q=大溪老街魯味", desc:"小份 50 元"},
+{name:"大溪老街飲料", type:"飲料", map:"https://maps.google.com/?q=大溪老街飲料", desc:"40 元"}
+]
+
+function filterFood(type){
+let html=""
+foodList.forEach(f=>{
+if(type==="all" || f.type===type){
+html+=`<div class="card">
+<b>${f.name}</b> (${f.type})<br>
+${f.desc}<br>
+<a href="${f.map}" target="_blank" class="text-blue-600">Google Maps</a>
+</div>`
+}
+})
+document.getElementById("foodList").innerHTML=html
+}
+filterFood("all") // 預設顯示全部
+
+</script>
 </body>
 </html>
