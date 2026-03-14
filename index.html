@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>桃園親子一日遊 v2</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+.section{display:none}
+.section.active{display:block}
+
+.navbtn{
+padding:8px 14px;
+border-radius:8px;
+background:#f1f5f9;
+}
+
+.card{
+background:white;
+padding:12px;
+border-radius:8px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+margin-bottom:10px;
+}
+
+.timeline{
+border-left:4px solid #3b82f6;
+padding-left:12px;
+margin-bottom:16px;
+}
+
+iframe{
+width:100%;
+height:250px;
+border:0;
+border-radius:8px;
+}
+
+</style>
+
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+<!-- NAV -->
+
+<div class="bg-white shadow sticky top-0 z-50">
+
+<div class="max-w-6xl mx-auto flex flex-wrap gap-2 p-4">
+
+<button class="navbtn" onclick="show('overview')">總覽</button>
+<button class="navbtn" onclick="show('timeline')">行程</button>
+<button class="navbtn" onclick="show('map')">地圖</button>
+<button class="navbtn" onclick="show('parking')">停車</button>
+<button class="navbtn" onclick="show('food')">美食</button>
+<button class="navbtn" onclick="show('transport')">交通</button>
+<button class="navbtn" onclick="show('prepare')">準備</button>
+
+</div>
+
+</div>
+
+<div class="max-w-6xl mx-auto p-4">
+
+
+<!-- OVERVIEW -->
+
+<div id="overview" class="section active">
+
+<h1 class="text-2xl font-bold mb-4">
+2026/3/15 桃園親子一日遊
+</h1>
+
+<div class="card">
+
+<p>出發：新莊頭前路</p>
+<p>預約：義百代 11:00</p>
+<p>同行：11歲 + 9歲</p>
+
+</div>
+
+
+<div class="card">
+
+模式：
+
+<select id="mode" class="border p-1">
+
+<option value="slow">悠閒</option>
+<option value="normal">一般</option>
+<option value="fast">緊湊</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<!-- TIMELINE -->
+
+<div id="timeline" class="section">
+
+<h2 class="text-xl font-bold mb-4">時間軸</h2>
+
+<div id="timelineList"></div>
+
+</div>
+
+
+
+<!-- MAP -->
+
+<div id="map" class="section">
+
+<h2 class="text-xl font-bold mb-4">景點地圖</h2>
+
+<div class="card">
+
+義百代
+
+<iframe
+src="https://maps.google.com/maps?q=義百代桃園店&output=embed">
+</iframe>
+
+</div>
+
+<div class="card">
+
+月眉濕地
+
+<iframe
+src="https://maps.google.com/maps?q=月眉濕地&output=embed">
+</iframe>
+
+</div>
+
+<div class="card">
+
+大溪老街
+
+<iframe
+src="https://maps.google.com/maps?q=大溪老街&output=embed">
+</iframe>
+
+</div>
+
+</div>
+
+
+
+<!-- PARKING -->
+
+<div id="parking" class="section">
+
+<h2 class="text-xl font-bold mb-4">停車</h2>
+
+<div class="card">
+
+義百代停車
+
+<a target="_blank"
+class="text-blue-600"
+href="https://maps.google.com/?q=義百代停車">
+
+Google Maps
+
+</a>
+
+</div>
+
+<div class="card">
+
+月眉停車
+
+<a target="_blank"
+class="text-blue-600"
+href="https://maps.google.com/?q=月眉濕地停車場">
+
+Google Maps
+
+</a>
+
+</div>
+
+<div class="card">
+
+大溪橋停車
+
+<a target="_blank"
+class="text-blue-600"
+href="https://maps.google.com/?q=大溪橋停車場">
+
+Google Maps
+
+</a>
+
+</div>
+
+</div>
+
+
+
+<!-- FOOD -->
+
+<div id="food" class="section">
+
+<h2 class="text-xl font-bold mb-4">美食</h2>
+
+<select id="filter" class="border p-2 mb-3">
+
+<option value="all">全部</option>
+<option value="snack">小吃</option>
+<option value="meal">正餐</option>
+<option value="dessert">甜點</option>
+
+</select>
+
+<div id="foodList"></div>
+
+</div>
+
+
+
+<!-- TRANSPORT -->
+
+<div id="transport" class="section">
+
+<h2 class="text-xl font-bold mb-4">
+
+交通統計
+
+</h2>
+
+<canvas id="chart"></canvas>
+
+</div>
+
+
+
+<!-- PREPARE -->
+
+<div id="prepare" class="section">
+
+<h2 class="text-xl font-bold mb-4">
+
+準備
+
+</h2>
+
+<ul class="card list-disc ml-6">
+
+<li>水</li>
+<li>帽子</li>
+<li>防蚊液</li>
+<li>雨具</li>
+
+</ul>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+function show(id){
+
+document.querySelectorAll(".section")
+.forEach(s=>s.classList.remove("active"))
+
+document.getElementById(id)
+.classList.add("active")
+
+}
+
+
+
+const schedules={
+
+slow:[
+"09:50 出發",
+"11:00 義百代",
+"12:30 月眉濕地",
+"14:30 大溪老街",
+"16:30 回程"
+],
+
+normal:[
+"09:50 出發",
+"11:00 義百代",
+"12:20 月眉",
+"14:00 老街",
+"16:00 回程"
+],
+
+fast:[
+"10:00 出發",
+"11:00 義百代",
+"12:00 月眉",
+"13:30 老街",
+"15:30 回程"
+]
+
+}
+
+
+
+function renderTimeline(mode){
+
+let html=""
+
+schedules[mode].forEach(t=>{
+
+html+=`<div class="timeline">${t}</div>`
+
+})
+
+document.getElementById("timelineList").innerHTML=html
+
+}
+
+
+
+document
+.getElementById("mode")
+.onchange=e=>renderTimeline(e.target.value)
+
+renderTimeline("slow")
+
+
+
+const foods=[
+
+{name:"賴祖傳豆花",type:"dessert",map:"https://maps.google.com/?q=賴祖傳豆花"},
+{name:"老阿伯豆干",type:"snack",map:"https://maps.google.com/?q=老阿伯豆干"},
+{name:"TINA廚房",type:"meal",map:"https://maps.google.com/?q=TINA廚房"}
+
+]
+
+
+
+function renderFood(type){
+
+let html=""
+
+foods
+.filter(f=>type=="all"||f.type==type)
+.forEach(f=>{
+
+html+=`
+
+<div class="card">
+
+<b>${f.name}</b>
+
+<br>
+
+<a target="_blank"
+href="${f.map}"
+class="text-blue-600">
+
+Google Maps
+
+</a>
+
+</div>
+
+`
+
+})
+
+document.getElementById("foodList").innerHTML=html
+
+}
+
+document
+.getElementById("filter")
+.onchange=e=>renderFood(e.target.value)
+
+renderFood("all")
+
+
+
+new Chart(
+
+document.getElementById("chart"),
+
+{
+type:"bar",
+
+data:{
+labels:["時間","油錢","距離"],
+datasets:[
+{
+label:"數值",
+data:[120,300,60]
+}
+]
+}
+
+}
+
+)
+
+</script>
+
+</body>
+</html>
